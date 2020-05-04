@@ -1,0 +1,21 @@
+name: All tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Unit tests
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache repository
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: lein deps
+    - name: Run tests
+      run: lein test
