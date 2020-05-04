@@ -12,7 +12,7 @@
               [(quot p BITS_PER_BYTE) (mod p BITS_PER_BYTE)]))))
 
 (defn- get-initial-array
-  [size]
+  [^long size]
   (-> (/ size BITS_PER_BYTE) Math/ceil byte-array))
 
 (defprotocol IBloomFilter
@@ -37,7 +37,7 @@
 
 (defn make-filter
   "Makes a new bloom filter."
-  [{:keys [hash-algo size num-hashes]
+  [{:keys [hash-algo ^long size num-hashes]
     :or {hash-algo "SHA-256" size 1024 num-hashes 3}}]
   (assert (pos? size) "The size should be positive!")
   (->> (get-initial-array size)
