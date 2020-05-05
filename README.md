@@ -19,9 +19,10 @@ A simple Bloom filter
 
 - `make-filter` makes a Bloom filter with the following paramters
   ```clojure
-  (blossom/make-filter {:hash-size "SHA-1"
-                        :size 512
-                        :num-hashes 2})
+  (blossom/make-filter {:hash-size "SHA-256"
+                        :size 1024
+                        :num-hashes 3
+                        :thread-safe? false})
   ```
   - `hash-algo`: You can specify an algorithm for the hash function. "MD2", "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384" or "SHA-512" can be set. By default, "SHA-256" will be set.
   - `size`: Bloom filter's size in bits. By default, the size will be 1024 bits.
