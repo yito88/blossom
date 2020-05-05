@@ -2,7 +2,6 @@
   (:require [taoensso.nippy :as nippy])
   (:import (java.security MessageDigest)))
 
-(set! *unchecked-math* :warn-on-boxed)
 (def ^:private ^:const SALT_LENGTH 8)
 
 (defn- get-salt
