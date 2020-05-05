@@ -26,3 +26,4 @@ A simple Bloom filter
   - `hash-algo`: You can specify an algorithm for the hash function. "MD2", "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384" or "SHA-512" can be set. By default, "SHA-256" will be set.
   - `size`: Bloom filter's size in bits. By default, the size will be 1024 bits.
   - `num-hashes`: This specifies the number of bits set to the filter when an item is added. By default, this will be 3.
+  - `thread-safe?`: If this is true, a thread-safe filter is made. The performance of the filter will be lower than that of a filter with `{:thread-safe false}`. BY default, it will be false.

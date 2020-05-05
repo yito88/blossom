@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [blossom.core :as blossom]))
 
-(defn rand-str
+(defn- rand-str
   [len]
   (->> (repeatedly #(char (+ (rand 26) 65)))
        (take len)
@@ -24,3 +24,9 @@
     (doseq [i inputs]
       (blossom/add bf i))
     (is (true? (every? #(blossom/hit? bf %) inputs)))))
+
+(deftest concurrent-filter-test
+  (let [bf (blossom/make-filter {:size 10240 :thread-safe? true})
+        inputs (take 1000 (repeatedly #(rand-str (rand-int 256))))]
+    (doall (pmap #(blossom/add bf %) inputs))
+    (is (every? true? (pmap #(blossom/hit? bf %) inputs)))))

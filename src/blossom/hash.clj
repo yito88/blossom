@@ -17,7 +17,7 @@
     (fn [item]
       (let [bs (nippy/freeze item)]
         (for [salt salts]
-          (let [h (.digest md (byte-array (concat bs salt)))]
+          (let [h (locking md (.digest md (byte-array (concat bs salt))))]
             (-> (areduce h i ret 0
                          (bit-or (bit-shift-left ret 8)
                                  (bit-and 0xff (aget h i))))
