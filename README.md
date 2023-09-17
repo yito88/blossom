@@ -1,5 +1,5 @@
 [![Clojars Project](https://img.shields.io/clojars/v/blossom.svg)](https://clojars.org/blossom)
-[![Build](https://github.com/yito88/blossom/workflows/main/badge.svg)](https://github.com/yito88/blossom/actions)
+[![Build](https://github.com/yito88/blossom/workflows/build/badge.svg)](https://github.com/yito88/blossom/actions)
 
 # blossom
 A simple Bloom filter
