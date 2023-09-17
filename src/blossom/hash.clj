@@ -10,10 +10,13 @@
        (take len)
        byte-array))
 
+(defn get-salts
+  [num-hashes]
+  (repeatedly num-hashes #(get-salt SALT_LENGTH)))
+
 (defn get-hash-fn
-  [algo size num-hashes]
-  (let [md (MessageDigest/getInstance algo)
-        salts (repeatedly num-hashes #(get-salt SALT_LENGTH))]
+  [algo size salts]
+  (let [md (MessageDigest/getInstance algo)]
     (fn [item]
       (let [bs (nippy/freeze item)]
         (for [salt salts]

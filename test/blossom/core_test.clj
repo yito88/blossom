@@ -30,3 +30,20 @@
         inputs (take 1000 (repeatedly #(rand-str (rand-int 256))))]
     (doall (pmap #(blossom/add bf %) inputs))
     (is (every? true? (pmap #(blossom/hit? bf %) inputs)))))
+
+(deftest serde-test
+  (let [bf (blossom/make-filter {:size 10240})
+        inputs (take 1000 (repeatedly #(rand-str (rand-int 256))))]
+    (doseq [i inputs] (blossom/add bf i))
+    (let [bytes (blossom/serialize-filter bf)
+          restored-bf (blossom/deserialize-filter bytes {:size 10240})]
+      (is (true? (every? #(blossom/hit? restored-bf %) inputs))))))
+
+(deftest serde-concurrent-filter-test
+  (let [bf (blossom/make-filter {:size 10240 :thread-safe? true})
+        inputs (take 1000 (repeatedly #(rand-str (rand-int 256))))]
+    (doall (pmap #(blossom/add bf %) inputs))
+    (let [bytes (blossom/serialize-filter bf)
+          restored-bf (blossom/deserialize-filter
+                       bytes {:size 10240 :thread-safe? true})]
+      (is (every? true? (pmap #(blossom/hit? restored-bf %) inputs))))))
